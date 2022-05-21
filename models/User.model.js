@@ -7,6 +7,7 @@ const userSchema = new Schema({
     required: [true, "Username is required."],
     unique: true,
   },
+  //Your model has email on it, however you never use it, so you should take it off
   email: {
     type: String,
     match: [/^\S+@\S+\.\S+$/, "Please use a valid email address."],

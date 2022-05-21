@@ -9,6 +9,7 @@ router.get("/signup", (req, res, next) => {
 
 router.post("/signup", async (req, res, next) => {
   const { username, email, password } = req.body;
+  /* Your view is only sending username and password, not email, because its not on the form */
   console.log(req.body);
 
   // check username and password  are fulfill
@@ -61,6 +62,7 @@ router.post("/login", async (req, res, next) => {
   const { username, email, password } = req.body;
   console.log(req.body);
 
+  /* The user has provided a username and not an email on signup, so ask and test for the same */
   if (!email || !password) {
     return res.render("auth/login", {
       errorMessage: "Credentials are mondatory!",
@@ -96,7 +98,10 @@ router.post("/login", async (req, res, next) => {
     req.session.currentUser = objectUser;
 
     return res.redirect("/");
-  } catch (error) {}
+  } catch (error) {
+    /* Always add the next here, so that you take advantage of Ironlauncher's error-handlings */
+    next(error)
+  }
 });
 
 router.get("/logout", (req, res, next) => {
